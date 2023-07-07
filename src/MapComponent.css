@@ -46,7 +46,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(42, 47, 59, 0.7);
+  background-color: rgba(42, 47, 59, 0.85);
   border-radius: 5px;
   padding: 10px;
   position: relative;
@@ -70,7 +70,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
-  filter: saturate(150%); /* Adjust the saturation value as desired */
+  filter: saturate(130%); /* Adjust the saturation value as desired */
 }
 
 

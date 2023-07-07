@@ -14,6 +14,8 @@ mapboxgl.accessToken =
 
 const MapComponent = ({ startDate, endDate, onAddEvent }) => {
   const mapContainerRef = useRef(null);
+  // eslint-disable-next-line
+  const [selectedType, setSelectedType] = useState("both");
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
 
