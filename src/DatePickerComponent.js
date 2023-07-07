@@ -33,9 +33,6 @@ const DatePickerComponent = ({
     setStartDate(date);
   };
 
-  const endDateInputValue = endDate
-    ? `${formatDate(startDate)} - ${formatDate(endDate)}`
-    : "";
 
   return (
     <div className="picker-div">

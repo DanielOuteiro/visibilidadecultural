@@ -3,7 +3,6 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
   parseISO,
-  isWithinInterval,
   format,
   eachDayOfInterval,
 } from "date-fns";
@@ -61,6 +60,8 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
               marker.type === "show"
             );
           }
+          return false; // add this line
+
         });
         
         
@@ -135,9 +136,6 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
     return () => map.remove();
   }, [startDate, endDate, selectedType, onAddEvent]);
 
-  const handleToggleChange = (event) => {
-    setSelectedType(event.target.value);
-  };
 
   return (
     <div className="map-container">
