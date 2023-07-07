@@ -9,12 +9,6 @@ const DatePickerComponent = ({
   setStartDate,
   setEndDate,
 }) => {
-  const formatDate = (date) => {
-    // Format the date as desired (e.g., "July 12")
-    const options = { month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
-  };
-
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <input
       type="text"
