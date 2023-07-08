@@ -36,7 +36,7 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
 
     map.on("load", async () => {
       try {
-        const response = await fetch("https://raw.githubusercontent.com/DanielOuteiro/drop/main/all_posts_PT.json");
+        const response = await fetch("https://raw.githubusercontent.com/DanielOuteiro/visibilidadecultural/main/public/all_posts_PT.json");
         const data = await response.json();
 
         const filteredData = data.filter((marker) => {
