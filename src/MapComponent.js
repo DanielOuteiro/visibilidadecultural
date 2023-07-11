@@ -1,11 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import {
-  parseISO,
-  format,
-  eachDayOfInterval,
-} from "date-fns";
+import { parseISO, format, eachDayOfInterval } from "date-fns";
 import "./MapComponent.css";
 import EventModal from "./EventModal";
 
@@ -14,10 +10,21 @@ mapboxgl.accessToken =
 
 const MapComponent = ({ startDate, endDate, onAddEvent }) => {
   const mapContainerRef = useRef(null);
-  // eslint-disable-next-line
-  const [selectedType, setSelectedType] = useState("both");
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
+  const [isToggleListVisible, setIsToggleListVisible] = useState(false);
+
+  const eventTypes = [
+    "show",
+    "festival",
+    "party",
+    "play",
+    "workshop",
+    "book_launch",
+    "conference",
+    "exhibition",
+  ];
 
   function formatEventDate(dateString) {
     const eventDate = parseISO(dateString);
@@ -31,41 +38,30 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
       center: [-8, 39],
       zoom: 6.2,
       minZoom: 5,
-
     });
 
     map.on("load", async () => {
       try {
-        const response = await fetch("https://raw.githubusercontent.com/DanielOuteiro/visibilidadecultural/main/public/all_posts_PT.json");
+        const response = await fetch(
+          "https://raw.githubusercontent.com/DanielOuteiro/visibilidadecultural/main/public/all_posts_PT.json"
+        );
         const data = await response.json();
 
         const filteredData = data.filter((marker) => {
           const eventStartDate = parseISO(marker.event_date);
           const eventEndDate = parseISO(marker.event_end_date);
-        
-          if (selectedType === "both") {
+
+          if (
+            selectedTypes.length === 0 ||
+            selectedTypes.includes(marker.type)
+          ) {
             return (
               (startDate <= eventEndDate && endDate >= eventStartDate) ||
               (eventStartDate <= endDate && eventEndDate >= startDate)
             );
-          } else if (selectedType === "festival") {
-            return (
-              ((startDate <= eventEndDate && endDate >= eventStartDate) ||
-                (eventStartDate <= endDate && eventEndDate >= startDate)) &&
-              marker.type === "festival"
-            );
-          } else if (selectedType === "show") {
-            return (
-              ((startDate <= eventEndDate && endDate >= eventStartDate) ||
-                (eventStartDate <= endDate && eventEndDate >= startDate)) &&
-              marker.type === "show"
-            );
           }
-          return false; // add this line
-
+          return false;
         });
-        
-        
 
         // Update visible markers on map load
         const bounds = map.getBounds();
@@ -135,8 +131,25 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
     });
 
     return () => map.remove();
-  }, [startDate, endDate, selectedType, onAddEvent]);
+  }, [startDate, endDate, selectedTypes, onAddEvent]);
 
+  const handleTypeToggle = (type) => {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(
+        selectedTypes.filter((selectedType) => selectedType !== type)
+      );
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
+    }
+  };
+
+  const handleToggleListVisibility = () => {
+    setIsToggleListVisible(!isToggleListVisible);
+  };
+
+  const handleSelectAll = () => {
+    setSelectedTypes(eventTypes);
+  };
 
   return (
     <div className="map-container">
@@ -151,10 +164,42 @@ const MapComponent = ({ startDate, endDate, onAddEvent }) => {
           thumbnail={selectedMarker.thumbnail} // Pass the thumbnail property
         />
       )}
+      <div className="toggle-button-container">
+        <button
+          className="toggle_event_button"
+          onClick={handleToggleListVisibility}
+        >
+          <img src="/icons/filter.svg" alt="Toggle List" />
+        </button>
+
+        {isToggleListVisible && (
+        <div className="type-toggle-container">
+          <div className="type-toggle-list">
+            {eventTypes.map((type) => (
+              <label key={type} className="type-toggle">
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(type)}
+                  onChange={() => handleTypeToggle(type)}
+                />
+                {type}
+              </label>
+            ))}
+          </div>
+          <div className="button-clear-select-container">
+            <button onClick={handleSelectAll}>Select All</button>
+            <button onClick={() => setSelectedTypes([])}>Clear All</button>
+          </div>
+        </div>
+      )}
+    </div>
 
       <div className="list-container">
         {visibleMarkers.length === 0 ? (
-          <div className="no-events">No events found, please change your dates or search in a different area</div>
+          <div className="no-events">
+            No events found, please change your dates or search in a different
+            area
+          </div>
         ) : (
           <div className="list">
             {visibleMarkers.map((marker) => (

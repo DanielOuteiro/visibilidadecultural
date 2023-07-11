@@ -100,9 +100,9 @@
 
 .venue-name {
   font-size: 1.25rem;
-  font-family: SF Pro Text;
-  font-style: normal;
   font-weight: 600;
+  font-family: "Inter", sans-serif;
+
   line-height: 1.375rem;
   letter-spacing: -0.0255rem;
 }
@@ -110,11 +110,11 @@
 .event-date {
   color: rgba(235, 235, 245, 0.6) !important;
   font-size: 1rem;
-  font-family: SF Pro Text;
-  font-style: normal;
   font-weight: 400;
   margin-top: -15px; /* Add this line to remove the top margin */
   letter-spacing: -0.015rem;
+  font-family: "Inter", sans-serif;
+
 }
 
 .event-time {
