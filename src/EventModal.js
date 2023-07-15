@@ -76,7 +76,6 @@ const EventModal = ({
   }
 
   const getButtonLabel = (day, index) => {
-    const dayNumber = index + 1;
     const isAdded = addedDays.includes(day);
 
     if (event.eventDays.length === 1) {
@@ -138,6 +137,20 @@ const EventModal = ({
 
           <div className="right-content">
             <h2 className="event-title">{event.title}</h2>
+            <div className="spotify-followers">
+            <div className="spotify-icon">
+              <img src="icons/spotify.svg" alt="Spotify Icon" />
+            </div>
+            <div className="followers-info">
+              <p className="followers-count">
+                {formatFollowerCount(event.spotify_followers)}
+              </p>
+              <p className="followers-label">Followers</p>
+            </div>
+            <div className="play-icon">
+              <img src="icons/play.svg" alt="Play Icon" />
+            </div>
+          </div>
             {event.eventDays && event.eventDays.length > 1 && (
               <div className="artist-container">
                 <div className="artist-circle">
