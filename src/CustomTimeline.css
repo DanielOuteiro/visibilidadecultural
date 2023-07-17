@@ -1,0 +1,52 @@
+.rbc-toolbar {
+  display: none;
+}
+
+.rbc-time-content {
+  display: flex;
+  flex: 1 0;
+  align-items: flex-start;
+  width: 100%;
+  border-top: none;
+  overflow-y: auto;
+  position: relative;
+  border: none;
+}
+
+.rbc-time-content > * + * > * {
+    border-left: none;
+}
+
+.rbc-time-gutter.rbc-time-column {
+  font-size: small;
+  color: white;
+}
+
+.rbc-today {
+  background-color: transparent !important;
+}
+
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-timeslot-group {
+  border: none;
+}
+
+.rbc-time-header.rbc-overflowing {
+  border-right: none;
+}
+
+.rbc-time-header-content {
+  border-left: none;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: none;
+}
+
+.rbc-event {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  border: none !important;
+}

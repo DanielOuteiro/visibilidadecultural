@@ -3,6 +3,7 @@ import ReactModal from "react-modal";
 import { format } from "date-fns";
 import { parseISO } from "date-fns";
 import "./event-modal.css"; // Import the event-modal.css file
+import Calendar from "./timeline-calendar"; // Import the Calendar component
 
 const EventModal = ({
   isOpen,
@@ -94,6 +95,11 @@ const EventModal = ({
     setShowNewContainer(false);
   };
 
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setSelectedTab(index);
+  };
   return (
     <ReactModal
       isOpen={isOpen}
@@ -108,7 +114,45 @@ const EventModal = ({
     >
       {showNewContainer ? (
         <div className="new-container">
-          <p>I am the new container</p>
+          <div className="tabs">
+            <div
+              className={`tab ${selectedTab === 0 ? "selected" : ""}`}
+              onClick={() => handleTabClick(0)}
+            >
+              Day 1
+            </div>
+            <div
+              className={`tab ${selectedTab === 1 ? "selected" : ""}`}
+              onClick={() => handleTabClick(1)}
+            >
+              Day 2
+            </div>
+            <div
+              className={`tab ${selectedTab === 2 ? "selected" : ""}`}
+              onClick={() => handleTabClick(2)}
+            >
+              Day 3
+            </div>
+          </div>
+
+          <div className="content">
+            <div
+              className={`content-item ${selectedTab === 0 ? "active" : ""}`}
+            >
+              <Calendar /> {/* Use the Calendar component */}
+            </div>
+            <div
+              className={`content-item ${selectedTab === 1 ? "active" : ""}`}
+            >
+              <p>Hey, I am container 2</p>
+            </div>
+            <div
+              className={`content-item ${selectedTab === 2 ? "active" : ""}`}
+            >
+              <p>Hey, I am container 3</p>
+            </div>
+          </div>
+
           <button onClick={handleBackClick}>Back</button>
         </div>
       ) : (
@@ -137,7 +181,7 @@ const EventModal = ({
 
           <div className="right-content">
             <h2 className="event-title">{event.title}</h2>
-            
+
             {event.eventDays && event.eventDays.length > 1 && (
               <div className="artist-container">
                 <div className="artist-circle">
@@ -161,20 +205,20 @@ const EventModal = ({
               </p>
             )}
 
-<div className="spotify-followers">
-            <div className="spotify-icon">
-              <img src="icons/spotify.svg" alt="Spotify Icon" />
+            <div className="spotify-followers">
+              <div className="spotify-icon">
+                <img src="icons/spotify.svg" alt="Spotify Icon" />
+              </div>
+              <div className="followers-info">
+                <p className="followers-count">
+                  {formatFollowerCount(event.spotify_followers)}
+                </p>
+                <p className="followers-label">Followers</p>
+              </div>
+              <div className="play-icon">
+                <img src="icons/play.svg" alt="Play Icon" />
+              </div>
             </div>
-            <div className="followers-info">
-              <p className="followers-count">
-                {formatFollowerCount(event.spotify_followers)}
-              </p>
-              <p className="followers-label">Followers</p>
-            </div>
-            <div className="play-icon">
-              <img src="icons/play.svg" alt="Play Icon" />
-            </div>
-          </div>
             <div className="event-description">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
@@ -199,9 +243,12 @@ const EventModal = ({
         <img src={thumbnail} alt="Thumbnail" />
       </div>
 
+      <div className="parent">
+
       <button className="close-button" onClick={closeModal}>
         <img src="/icons/close.svg" alt="Close" />
       </button>
+      </div>
 
       {!showMoreInfo && !showNewContainer && (
         <div className="button-container">

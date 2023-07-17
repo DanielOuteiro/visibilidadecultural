@@ -80,7 +80,7 @@
 .close-button {
   position: absolute;
   top: 1em;
-  left: 1em;
+  right: 1em;
   cursor: pointer;
   color: white;
   font-size: 24px;
@@ -263,9 +263,49 @@
 }
 
 .new-container {
-  position: fixed;
-  right: 20px;
+  position: relative;
+  top: 4em;
+  left: 2em;
   z-index: 999;
+  min-width: 85vw;
+  max-width: 85vw;
+  min-height: 90vh;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+.tabs {
+  display: flex;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.tab {
+  padding: 10px;
+  margin-right: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.tab.selected {
+  color: #fff;
+}
+
+.content {
+  display: flex;
+}
+
+.content-item {
+  flex: 0 0 100%;
+  display: none;
+  padding: 20px;
+}
+
+.content-item.active {
+  display: block;
 }
 
 .artist-container {
@@ -388,9 +428,9 @@
   }
 
   .close-button {
-    position: fixed;
-    top: 0.2em;
-    left: 0.2em;
+    position: absolute;
+    top: 1em;
+    right: 0em;
     cursor: pointer;
     color: white;
     font-size: 24px;
