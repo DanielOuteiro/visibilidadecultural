@@ -25,7 +25,6 @@ const MyCalendar = props => (
       ]}
       startAccessor="start"
       endAccessor="end"
-      style={{ height: '80vh', width:'87vw' }}
       defaultView="day"
       views={['day']}
       defaultDate={new Date(2023, 6, 17)}
